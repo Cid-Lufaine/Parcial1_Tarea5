@@ -1,38 +1,57 @@
+import uaslp.objetos.list.ArrayList.ArrayList;
+import uaslp.objetos.list.List;
 import uaslp.objetos.list.linkedlist.LinkedList;
 
 public class Main {
     public static void main(String[] args) {
-        LinkedList list = new LinkedList();
 
-        System.out.println("test del programa");
-        list.printlist();
-        list.addAtFront("primero ");
-        list.addAtFront("segundo ");
-        list.addAtTail("tercero");
-        list.addAtTail("cuarto");
-        list.setAt(2,"quinto");
-        System.out.println("el tamaño de la lista es: "+list.getSize());
-        list.printlist();
-        list.addAtFront("primero ");
-        list.addAtFront("primero ");
-        list.addAtFront("primero ");
-        list.addAtFront("primero ");
-        System.out.println("el tamaño de la lista es: "+list.getSize());
-        list.printlist();
-        list.remove(100);
-        list.remove(0);
-        list.remove(8);
-        list.remove(4);
-        System.out.println("el tamaño de la lista es: "+list.getSize());
-        list.printlist();
-        list.removeAllWithValue("primero ");
-        System.out.println("el tamaño de la lista es: "+list.getSize());
-        list.printlist();
-        list.removeAll();
-        System.out.println("el tamaño de la lista es: "+list.getSize());
-        list.printlist();
+        List lista1=new LinkedList();
+        List lista2=new ArrayList();
+        System.out.println("test del programa LinkedList");
+        test(lista1);
+        System.out.println("test del programa ArrayList");
+        test(lista2);
+    }
+
+    public static void test(List lista){
+
+        lista.printList();
+
+        lista.addAtFront("primero");
+        lista.addAtFront("segundo");
+        lista.addAtTail("tercero");
+        lista.addAtTail("cuarto");
+        lista.printList();
+        System.out.println("el tamaño de la lista es: "+lista.getSize());
+
+        lista.setAt(2,"quinto");
+        lista.printList();
+        System.out.println("el tamaño de la lista es: "+lista.getSize());
 
 
+        lista.addAtFront("primero");
+        lista.addAtFront("primero");
+        lista.addAtFront("primero");
+        lista.addAtFront("primero");
+        lista.printList();
+        System.out.println("el tamaño de la lista es: "+lista.getSize());
 
+        lista.remove(100);
+        lista.remove(0);
+        lista.remove(8);
+        lista.remove(1);
+        lista.printList();
+        System.out.println("el tamaño de la lista es: "+lista.getSize());
+
+        lista.removeAllWithValue("primero");
+
+        lista.printList();
+        System.out.println("el tamaño de la lista es: "+lista.getSize());
+
+        lista.removeAll();
+        lista.printList();
+        System.out.println("el tamaño de la lista es: "+lista.getSize());
+        System.out.println("find del test");
+        System.out.println();
     }
 }

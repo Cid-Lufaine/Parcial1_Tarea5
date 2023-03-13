@@ -1,6 +1,9 @@
 package uaslp.objetos.list.linkedlist;
 
-public class LinkedList {
+import uaslp.objetos.list.Iterator;
+import uaslp.objetos.list.List;
+
+public class LinkedList implements List {
     private Node head;
     private Node tail;
     private int size;
@@ -38,11 +41,11 @@ public class LinkedList {
         size++;
     }
     public void remove(int index){
-        if(index<0 || index> size){
+        if(index<0 || index>= size){
             System.out.println("index out of range");
         }else{
 
-            if(index==0||index==size) {
+            if(index==0||index==size-1) {
                 if(index==0){
                     Node NodeAtHead=head;
                     head=head.next;
@@ -89,7 +92,29 @@ public class LinkedList {
         //all the nodes are cleaned by the recolector?
     }
     public void setAt(int index, String data){
-        //asumiendo que setAt es una insercion, no una sobre escritura de "data"
+
+        if(index<0 || index> size){
+            System.out.println("index out of range");
+        }else{
+
+            if(index==0||index==size) {
+                if(index==0){
+                    head.data=data;
+                }else{
+                    tail.data=data;
+                }
+            }else {
+                Node currentNode=head;
+                for (int current_index = 0; current_index < index; current_index++) {
+                    currentNode = currentNode.next;
+                }
+                currentNode.data= data;
+            }
+        }
+
+    }
+    public void insertAt(int index, String data){
+
         if(index<0 || index> size){
             System.out.println("index out of range");
         }else{
@@ -137,9 +162,11 @@ public class LinkedList {
     public int getSize(){
         return this.size;
     }
-    public LinkedListIterator getIterator(){
+
+    public Iterator getIterator(){
         return new LinkedListIterator(head);
     }
+
     public void removeAllWithValue(String data){
         Node currentNode=head;
         for( int current_index=0; current_index < size; current_index++) {
@@ -172,11 +199,11 @@ public class LinkedList {
         }
     }
 
-    public void printlist() {
+    public void printList() {
 
         if(head!=null){
 
-            LinkedListIterator iterator = getIterator();
+            Iterator iterator = getIterator();
             while (iterator.hasNext()){
                 String data_list = iterator.next();
                 System.out.println(data_list);
