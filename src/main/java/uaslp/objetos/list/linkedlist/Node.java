@@ -1,7 +1,7 @@
 package uaslp.objetos.list.linkedlist;
 
-class Node {
-    String data;
+class Node <T>{
+    T data;
     Node next;
     Node previous;
 

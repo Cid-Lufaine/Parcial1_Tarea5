@@ -1,16 +1,19 @@
 package uaslp.objetos.list;
 
-import uaslp.objetos.list.ArrayList.ArrayListIterator;
+import uaslp.objetos.list.exceptions.BadIndexException;
+import uaslp.objetos.list.exceptions.NotNullAllowedException;
 
-public interface List {
-    void addAtTail(String data);
-    void addAtFront(String data);
-    void remove(int index);
+
+public interface List <T> {
+
+    void addAtTail(T data) throws NotNullAllowedException;
+    void addAtFront(T data) throws NotNullAllowedException;
+    void remove(int index) throws BadIndexException;
     void removeAll();
-    void setAt(int index, String data);
-    String getAt(int index);
-    void removeAllWithValue(String data);
+    void setAt(int index, T data) throws BadIndexException, NotNullAllowedException;
+    T getAt(int index) throws BadIndexException;
+    void removeAllWithValue(T data);
     int getSize();
-    Iterator getIterator();
-    void printList();
+    boolean isEmpty();
+    Iterator<T> getIterator();
 }

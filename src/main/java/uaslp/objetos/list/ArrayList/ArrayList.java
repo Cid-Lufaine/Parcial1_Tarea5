@@ -3,47 +3,61 @@ package uaslp.objetos.list.ArrayList;
 
 import uaslp.objetos.list.Iterator;
 import uaslp.objetos.list.List;
-import uaslp.objetos.list.linkedlist.LinkedListIterator;
+import uaslp.objetos.list.exceptions.BadIndexException;
+import uaslp.objetos.list.exceptions.NotNullAllowedException;
 
-public class ArrayList implements List {
+public class ArrayList <T> implements List {
     private static final int INITIAL_SIZE = 2;
-    private String[] array;
+    private T[] array;
     private int size;
 
 
     public ArrayList() {
-        array = new String[INITIAL_SIZE];
+        array = (T[]) new List [INITIAL_SIZE];
     }
 
-    public void addAtTail(String data) {
+    public void addAtTail(Object data) throws NotNullAllowedException {
         if (size == array.length) {
-            String[] newArray = new String[array.length * 2];
+            Object[] newArray = new Object[array.length * 2];
             for (int i = 0; i < array.length; i++) {
                 newArray[i] = array[i];
             }
-            array = newArray;
+            array = (T[]) newArray;
         }
-        array[size] = data;
-        size++;
+        if(data == null )
+        {
+            throw new NotNullAllowedException() ;
+        }else {
+            array[size] = (T) data;
+            size++;
+        }
     }
 
-    public void addAtFront(String data) {
-        int newSize;
-        if (size == array.length) {
-            newSize = array.length * 2;
-        } else {
-            newSize = array.length;
+    public void addAtFront(Object data)  throws NotNullAllowedException{
+        if(data==null){
+            throw new NotNullAllowedException() ;
+        }else {
+
+
+            int newSize;
+            if (size == array.length) {
+                newSize = array.length * 2;
+            } else {
+                newSize = array.length;
+            }
+            Object[] newArray = new Object[newSize];
+
+            newArray[0] = data;
+            for (int i = 0; i < size; i++) {
+                newArray[i + 1] = array[i];
+            }
+            array = (T[]) newArray;
+            size++;
         }
-        String[] newArray = new String[newSize];
-        newArray[0] = data;
-        for (int i = 0; i < size; i++) {
-            newArray[i + 1] = array[i];
-        }
-        array = newArray;
-        size++;
     }
 
-    public void remove(int index) {
+
+    public void remove(int index) throws BadIndexException {
         if (index >= 0 && index < size) {
             size--;
             for (int i = index; i < size; i++) {
@@ -51,34 +65,43 @@ public class ArrayList implements List {
             }
             array[size] = null; //necessary?
         }else {
-            System.out.println("index "+ index +" out of range");
+             throw new BadIndexException() ;
         }
     }
 
     public void removeAll() {
         size = 0;
-        array = new String[INITIAL_SIZE];
+        array = (T[]) new List [INITIAL_SIZE];
         //taking advantage of garbage collectors
     }
 
-    public void setAt(int index, String data) {
-        if (index > 0 || index < size) {
-            array[index] = data;
+
+    public void setAt(int index, Object data) throws BadIndexException, NotNullAllowedException {
+        if(data == null)
+        {
+            throw new NotNullAllowedException();
         }
+        if (index < 0 || index > size) {
+            throw new BadIndexException();
+        }
+        if (index > 0 || index < size) {
+            array[index] = (T)data;
+        }
+        return;
     }
 
-    public String getAt(int index) {
-        String answer;
+    public T getAt(int index) throws BadIndexException{
+        T answer;
         if (index > 0 || index < size) {
             answer = array[index];
         } else {
-            answer = null;
+            throw  new BadIndexException();
         }
         return answer;
     }
 
-    public void removeAllWithValue(String data) {
-        String[] newArray = new String[array.length];
+    public void removeAllWithValue(Object data) {
+        T[] newArray = (T[]) new List [INITIAL_SIZE];
         int newSize=0;
         for(int i =0;i<size;i++)
         {
@@ -92,6 +115,14 @@ public class ArrayList implements List {
     }
     public int getSize() {return size;}
 
+    public boolean isEmpty() {
+        if(getSize()==0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public Iterator getIterator(){
         return new ArrayListIterator(array);
     }
@@ -102,7 +133,7 @@ public class ArrayList implements List {
 
             Iterator iterator = getIterator();
             while (iterator.hasNext()){
-                String data_list = iterator.next();
+                T data_list = (T) iterator.next();
                 System.out.print(data_list+" ");
             }
             System.out.println();

@@ -2,10 +2,10 @@ package uaslp.objetos.list.ArrayList;
 
 import uaslp.objetos.list.Iterator;
 
-public class ArrayListIterator implements Iterator {
-    String[] array;
+public class ArrayListIterator <T> implements Iterator {
+    T[] array;
     private int index;
-    ArrayListIterator(String []array){
+    ArrayListIterator(T []array){
         index = 0;
         this.array=array;
     }
@@ -18,9 +18,9 @@ public class ArrayListIterator implements Iterator {
         }
 
     }
-    public String next(){
+    public T next(){
 
-        String data = array[index];
+        T data = array[index];
         index++;
         return data;
     }
