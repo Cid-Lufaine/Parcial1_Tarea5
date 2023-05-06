@@ -111,7 +111,7 @@ public class LinkedList <T>implements List {
             throw new BadIndexException();
         }else{
 
-            if(index==0||index==size) {
+            if(index==0||index==size-1) {
                 if(index==0){
                     head.data=data;
                 }else{
@@ -158,14 +158,12 @@ public class LinkedList <T>implements List {
 
     public void removeAllWithValue(Object data){
         Node currentNode=head;
+        int delets_conunter=0;
         for( int current_index=0; current_index < size; current_index++) {
-
             if (currentNode.data == data) {
-
 
                 Node previousNode = currentNode.previous;
                 Node nextNode = currentNode.next;
-
                 if (previousNode != null) {
                     previousNode.next = nextNode;
                 } else {
@@ -176,22 +174,19 @@ public class LinkedList <T>implements List {
                 } else {
                     tail = previousNode;
                 }
-                size--;
-                //para que sea aislado y eliminado por recolector?
+                delets_conunter++;
                 currentNode.previous = null;
                 currentNode.next = null;
-                //retomando la exploracion de la lista
                 currentNode = nextNode;
             } else {
                 currentNode = currentNode.next;
             }
         }
+        size=size-delets_conunter;
     }
 
     public void printList() {
-
         if(head!=null){
-
             Iterator iterator = getIterator();
             while (iterator.hasNext()){
                 T data_list = (T) iterator.next();

@@ -16,4 +16,5 @@ public interface List <T> {
     int getSize();
     boolean isEmpty();
     Iterator<T> getIterator();
+    public void printList();
 }
