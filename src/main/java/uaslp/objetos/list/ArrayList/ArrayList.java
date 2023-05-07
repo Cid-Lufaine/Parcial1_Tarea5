@@ -14,23 +14,30 @@ public class ArrayList <T> implements List {
 
     public ArrayList() {
         array = (T[]) new List [INITIAL_SIZE];
+        size=0;
     }
 
     public void addAtTail(Object data) throws NotNullAllowedException {
-        if (size == array.length) {
-            Object[] newArray = new Object[array.length * 2];
-            for (int i = 0; i < array.length; i++) {
-                newArray[i] = array[i];
-            }
-            array = (T[]) newArray;
-        }
         if(data == null )
         {
             throw new NotNullAllowedException() ;
-        }else {
+        }
+        if(size==0){
+            addAtFront(data);
+        }
+        else {
+            if (size == array.length) {
+                Object[] newArray = new Object[array.length * 2];
+                for (int i = 0; i < array.length; i++) {
+                    newArray[i] = array[i];
+                }
+                array = (T[]) newArray;
+            }
             array[size] = (T) data;
             size++;
         }
+
+
     }
 
     public void addAtFront(Object data)  throws NotNullAllowedException{
@@ -92,7 +99,7 @@ public class ArrayList <T> implements List {
 
     public T getAt(int index) throws BadIndexException{
         T answer;
-        if (index > 0 || index < size) {
+        if (index >= 0 && index < size) {
             answer = array[index];
         } else {
             throw  new BadIndexException();
@@ -101,17 +108,32 @@ public class ArrayList <T> implements List {
     }
 
     public void removeAllWithValue(Object data) {
-        T[] newArray = (T[]) new List [INITIAL_SIZE];
-        int newSize=0;
-        for(int i =0;i<size;i++)
+        Object[] newArray = new Object[2];
+        int size2=0;
+        for(int i =0; i<size; i++)
         {
+
             if(array[i]!=data){
-                newArray[newSize]=array[i];
-                newSize++;
+
+                if(size2==0){
+                    newArray[0] = (T)  array[i];
+                    size2++;
+                }
+                else {
+                    if (size2 == newArray.length) {
+                        Object[] newArray2 = new Object[newArray.length * 2];
+                        for (int j = 0; j < newArray.length; j++) {
+                            newArray2[j] = newArray[j];
+                        }
+                        newArray = (T[]) newArray2;
+                    }
+                    newArray[size2] = (T) array[i];
+                    size2++;
+                }
             }
         }
-        array=newArray;
-        size=newSize;
+        array= (T[]) newArray;
+        size=size2;
     }
     public int getSize() {return size;}
 
@@ -127,20 +149,18 @@ public class ArrayList <T> implements List {
         return new ArrayListIterator(array);
     }
 
+
+
     public void printList() {
-
-        if(size!=0){
-
+        if (size == 0) {
+            System.out.println("Empty list1");
+        } else {
             Iterator iterator = getIterator();
-            while (iterator.hasNext()){
+            while (iterator.hasNext()) {
                 T data_list = (T) iterator.next();
-                System.out.print(data_list+" ");
+                System.out.print(data_list + " ");
             }
-            System.out.println();
-        }else{
-            System.out.println("Empty list");
         }
     }
-
-
 }
+

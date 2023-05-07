@@ -44,7 +44,7 @@ public class LinkedListTest {
         //Validacion
         Assertions.assertFalse(list1.isEmpty());
     }
-    @Test
+    @org.junit.Test
     public  void incertin_null_values_exceptions_must_be_trown(){
         //Inicializacion
         List<Object> list1 = new LinkedList<>();
